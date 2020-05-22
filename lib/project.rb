@@ -31,9 +31,31 @@ class Project
     id = project.fetch("id").to_i
     Project.new({:title => title, :id => id})
   end
+  
+  def self.search(name)
+    project = DB.exec("SELECT * FROM projects WHERE name = '#{name}'").first
+    title = project.fetch("title")
+    id = project.fetch("id").to_i
+    Project.new({:title => title, :id => id})
+  end
+
+  def self.query(name)
+    search_results = []
+    projects = DB.exec("SELECT * FROM projects WHERE name LIKE '%#{name}%';")
+    projects.each() do |project|
+      title = project.fetch("title")
+      id = project.fetch("id")
+      projects.push(Project.new({:title => title, :id => id}))
+    end
+    return search_results
+  end
 
   def ==(project_to_compare)
-    self.title() == project_to_compare.title()
+    self.id.eql?(project_to_compare.id)
+  end
+
+  def self.clear
+    DB.exec("DELETE FROM projects *;")
   end
 
   def update(title)
@@ -50,15 +72,4 @@ class Project
   end
 end
 
-
-# def self.search(name)
-  #   city_names = City.all.map {|a| a.name }
-  #   result = []
-  #   names = city_names.grep(/#{name}/)
-  #   names.each do |n| 
-  #   display_city = City.all.select {|a| a.name == n}
-  #   result.concat(display_city)
-  #   end
-  #   result
-  # end
 
