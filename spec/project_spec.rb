@@ -23,7 +23,6 @@ describe (Project) do
     end
   end
 
-
   describe('#==') do
     it('is the same project if two projects have the same title') do
       project1 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
@@ -51,6 +50,17 @@ describe (Project) do
       project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
       project.save
       expect(Project.all).to(eq([project]))
+    end
+  end
+
+  describe('.clear') do
+    it("clears all projects") do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project.save()
+      project2 = Project.new({:title => 'Teaching Ruby to Kids', :id => nil})
+      project2.save()
+      Project.clear()
+      expect(Project.all).to(eq([]))
     end
   end
 
@@ -89,8 +99,10 @@ describe (Project) do
     it('allows a user to delete a project') do
       project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
       project.save
+      project2 = Project.new({:title => 'Teaching Ruby to Kids', :id => nil})
+      project2.save
       project.delete
-      expect(Project.all).to(eq([]))
+      expect(Project.all).to(eq([project2]))
     end
   end
 end
