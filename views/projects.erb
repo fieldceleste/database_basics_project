@@ -1,0 +1,19 @@
+<h1>Update <%= @word.term() %></h1>
+
+<form action="/words_homepage/<%= @word.id() %>" method="post">
+  <input name="_method" type="hidden" value="patch">
+
+  <label for="name">Rename this word to:</label>
+  <input id="name" name="name" type="text"><br>
+
+  <button type="submit">Update word-(Definition will stay the same)</button><br>
+
+</form>
+
+<form action="/words_homepage/<%= @word.id() %>" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete word</button>
+</form>
+
+<p><a href="/words">Return to word list</a></p>
