@@ -23,7 +23,7 @@ class Volunteer
     end
   
   def save 
-      volunteer = DB.exec("INSERT INTO volunteers (name, project_id) VALUES ('#{@name}',#{@project_id}) RETURNING id;")
+      result = DB.exec("INSERT INTO volunteers (name, project_id) VALUES ('#{@name}',#{@project_id}) RETURNING id;")
       @id = result.first().fetch("id").to_i
   end
 
@@ -43,10 +43,11 @@ class Volunteer
     Volunteer.new({:name => name,:project_id => project_id, :id => id})
   end
 
-  def update(name)
-    @name = name
-    @project_id = project_id
-    DB.exec("UPDATE volunteers SET name = '#{@name}',project_id = #{@project_id}  WHERE id = #{@id};")
+  def update(attributes)
+    @name = attributes.fetch(:name)
+    @project_id = attributes.fetch(:project_id)
+    DB.exec("UPDATE volunteers SET name = '#{@name}' WHERE id = #{@id};")
+    DB.exec("UPDATE volunteers SET project_id = '#{@project_id}' WHERE id = #{@id};")
   end
 
   def delete
@@ -65,20 +66,30 @@ class Volunteer
     volunteers
   end
 
+    def self.search(name)
+      volunteer = DB.exec("SELECT * FROM volunteers WHERE name = '#{name}'").first
+      name = volunteer.fetch("name")
+      id = volunteer.fetch("id").to_i
+      project_id = volunteer.fetch("project_id").to_i
+      Volunteer.new({:name => name, :id => id, :project_id => project_id})
+    end
+
+  def self.query(name)
+    search_results = []
+    volunteers = DB.exec("SELECT * FROM volunteers WHERE name LIKE '%#{name}%';")
+    volunteers.each() do |volunteer|
+      name = volunteer.fetch("name")
+      id = volunteer.fetch("id").to_i
+      project_id = volunteer.fetch("project_id").to_i
+      search_results.push(Volunteer.new({:name => name, :id => id, :project_id => project_id}))
+    end
+    return search_results
+  end
+
   def project
     Project.find(@project_id)
   end
 end
-#   def self.search(name)
-#     train_names = Train.all.map {|a| a.name }
-#     result = []
-#     names = train_names.grep(/#{name}/)
-#     names.each do |n| 
-#       display_train = Train.all.select {|a| a.name == n}
-#       result.concat(display_train)
-#     end
-#     result
-#   end
-# end
+
 
 
