@@ -28,11 +28,7 @@ class Volunteer
   end
 
   def ==(volunteer_to_compare)
-    if volunteer_to_compare != nil
-      (self.name() == volunteer_to_compare.name()) && (self.project_id() == volunteer_to_compare.project_id())
-    else
-      false
-    end
+    self.name.downcase().eql?(volunteer_to_compare.name.downcase())
   end
 
   def self.find(id)
