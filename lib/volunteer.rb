@@ -4,9 +4,9 @@ class Volunteer
   attr_accessor :project_id, :name
 
   def initialize(attributes)
-    @name = attritbutes.fetch(:name)
-    @id = attritbutes.fetch(:id).to_i
-    @project_id = attritbutes.fetch(:project_id)
+    @name = attributes.fetch(:name)
+    @id = attributes.fetch(:id).to_i
+    @project_id = attributes.fetch(:project_id)
   end
 
   
