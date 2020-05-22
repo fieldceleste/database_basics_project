@@ -1,85 +1,94 @@
-require('rspec')
-require('pry')
-require('spec_helper')
-require 'train'
+require "spec_helper"
 
-describe '#Train' do
 
-  describe('.all') do
-    it('returns an empty array when there are no trains') do
-      expect(Train.all).to(eq([]))
+describe Project do
+  describe '#title' do
+    it 'returns the project title' do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      expect(project.title).to eq 'Teaching Kids to Code'
     end
   end
 
+  context '#id' do
+    it 'returns the id of the project before saving project' do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      expect(project.id).to eq nil
+    end
 
-  describe('#save') do
-    it('saves a train') do
-      train = Train.new({:name => "Red line", :id => nil})
-      train.save()
-      train2 = Train.new({:name => "Blue line", :id => nil})
-      train2.save()
-      expect(Train.all).to(eq([train, train2]))
+    it 'returns the id of the project after saving project' do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project.save
+      expect(project.id).to be_an_instance_of Integer
     end
   end
 
-  describe('clear') do
-    it('clears a train') do
-      train = Train.new({:name => "Red line", :id => nil})
-      train.save()
-      train2 = Train.new({:name => "Blue line", :id => nil})
-      train2.save()
-      Train.clear()
-      expect(Train.all).to(eq([]))
+  describe '#==' do
+    it 'is the same project if two projects have the same title' do
+      project1 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project2 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      expect(project1 == project2).to eq true
     end
   end
 
-  describe('#==') do
-    it('is the same train if it has the same attributes as another train') do
-      train = Train.new({:name => "Red line", :id => nil})
-      train2 = Train.new({:name => "Red line", :id => nil})
-      expect(train).to(eq(train2))
+  context '.all' do
+    it 'is empty to start' do
+      expect(Project.all).to eq []
+    end
+
+    it 'returns all projects' do
+      project1 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project1.save
+      project2 = Project.new({:title => 'Teaching Ruby to Kids', :id => nil})
+      project2.save
+      expect(Project.all).to eq [project1, project2]
     end
   end
 
-  describe('.find') do 
-    it("finds a train by id") do 
-      train = Train.new({:name => "Red line", :id=> nil})
-      train.save()
-      train2 = Train.new({:name => "Blue Line", :id => nil})
-      train2.save()
-      expect(Train.find(train.id)).to(eq(train))
+  describe '#save' do
+    it 'saves a project to the database' do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project.save
+      expect(Project.all).to eq [project]
     end
   end
 
-  describe('#update') do 
-   it("updates a train by id") do 
-    train = Train.new({:name => "Red line", :id=> nil})
-    train.save()
-    train.update("Green Line")
-    expect(train.name).to(eq("Green Line"))
-   end
+  describe '.find' do
+    it 'returns a project by id' do
+      project1 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project1.save
+      project2 = Project.new({:title => 'Teaching Ruby to Kids', :id => nil})
+      project2.save
+      expect(Project.find(project1.id)).to eq project1
+    end
   end
 
-   describe('#delete') do 
-   it("deletes a train by id") do 
-    train = Train.new({:name => "Red line", :id=> nil})
-    train.save()
-    train2 = Train.new({:name => "Blue Line", :id => nil})
-    train2.save()
-    train.delete()
-    expect(Train.all).to(eq([train2]))
-   end
+  describe '#volunteers' do
+    it 'returns all volunteers for a specific project' do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project.save
+      volunteer1 = Volunteer.new({:name => 'Jasmine', :project_id => project.id, :id => nil})
+      volunteer1.save
+      volunteer2 = Volunteer.new({:name => 'Joe', :project_id => project.id, :id => nil})
+      volunteer2.save
+      expect(project.volunteers).to eq [volunteer1, volunteer2]
+    end
   end
 
-  describe('.search') do 
-    it("searches for a train by name") do
-    train = Train.new({:name => "Red line", :id=> nil})
-    train.save()
-    train2 = Train.new({:name => "Blue Line", :id => nil})
-    train2.save()
-    expect(Train.search("Blue Line")).to(eq([train2]))
+  describe '#update' do
+    it 'allows a user to update a project' do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project.save
+      project.update({:title => 'Teaching Ruby to Kids', :id => nil})
+      expect(project.title).to eq 'Teaching Ruby to Kids'
+    end
+  end
+
+  context '#delete' do
+    it 'allows a user to delete a project' do
+      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+      project.save
+      project.delete
+      expect(Project.all).to eq []
+    end
   end
 end
-
-end
-

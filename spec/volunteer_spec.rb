@@ -1,86 +1,59 @@
-require('rspec')
-require('pry')
-require('spec_helper')
-require('city')
-require('stop')
+require "spec_helper"
 
 
-describe '#City' do
+describe Volunteer do
 
-
-  describe('#all') do
-    it('returns an empty array when there are no cities') do
-      expect(City.all()).to(eq([]))
+  describe '#name' do
+    it 'returns the name of the volunteer' do
+      test_volunteer = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      expect(test_volunteer.name).to(eq('Jane'))
     end
   end
 
-  describe('#save') do
-    it('saves a city') do
-      city = City.new({:name => "Portland", :id => nil})
-      city.save()
-      city2 = City.new({:name => "Beaverton", :id => nil})
-      city2.save()
-      expect(City.all).to(eq([city, city2]))
+  describe '#project_id' do
+    it 'returns the project_id of the volunteer' do
+      test_volunteer = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      expect(test_volunteer.project_id).to eq 1
     end
   end
 
-  describe('.clear') do
-    it('clears a city') do
-      city = City.new({:name => "Portland", :id => nil})
-      city.save()
-      city2 = City.new({:name => "Beaverton", :id => nil})
-      city2.save()
-      City.clear()
-      expect(City.all).to(eq([]))
+  describe '#==' do
+    it 'checks for equality based on the name of a volunteer' do
+      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      volunteer2 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      expect(volunteer1 == volunteer2).to eq true
     end
   end
 
-  describe('#==') do
-    it('is the same city if it has the same attributes as another city') do
-      city = City.new({:name => "Portland", :id => nil})
-      city2 = City.new({:name => "Portland", :id => nil})
-      expect(city).to(eq(city2))
+  context '.all' do
+    it 'is empty to start' do
+      expect(Volunteer.all).to eq []
+    end
+
+    it 'returns all volunteers' do
+      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      volunteer1.save
+      volunteer2 = Volunteer.new({:name => 'Joe', :project_id => 1, :id => nil})
+      volunteer2.save
+      expect(Volunteer.all).to eq [volunteer1, volunteer2]
     end
   end
 
-  describe('.find') do 
-    it("finds a city by id") do 
-      city = City.new({:name => "Portland", :id=> nil})
-      city.save()
-      city2 = City.new({:name => "Beaverton", :id => nil})
-      city2.save()
-      expect(City.find(city.id)).to(eq(city))
+  describe '#save' do
+    it 'adds a volunteer to the database' do
+      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      volunteer1.save
+      expect(Volunteer.all).to eq [volunteer1]
     end
   end
 
-  describe('#update') do    
-    it("updates a city by id") do 
-      city = City.new({:name => "Portland", :id=> nil})
-      city.save()
-      city.update("Hillsboro") 
-      expect(city.name()).to(eq("Hillsboro"))
-    end
-  end
-
-  describe('#delete') do 
-    it("deletes a city by id") do 
-      city = City.new({:name => "Portland", :id=> nil})
-      city.save()
-      city2 = City.new({:name => "Beaverton", :id => nil})
-      city2.save()
-      city.delete()
-      expect(City.all).to(eq([city2]))
-    end
-  end
-  
-   describe('.search') do 
-    it("searches for a city by name") do 
-      city = City.new({:name => "Portland", :id=> nil})
-      city.save()
-      city2 = City.new({:name => "Beaverton", :id => nil})
-      city2.save()
-      expect(City.search("Portland")).to(eq([city]))
+  describe '.find' do
+    it 'returns a volunteer by id' do
+      volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})
+      volunteer1.save
+      volunteer2 = Volunteer.new({:name => 'Joe', :project_id => 1, :id => nil})
+      volunteer2.save
+      expect(Volunteer.find(volunteer1.id)).to eq volunteer1
     end
   end
 end
-  

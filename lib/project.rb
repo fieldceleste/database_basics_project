@@ -1,12 +1,12 @@
 
-class City 
+class Project 
 
   attr_reader :id, :name
   attr_accessor :id, :name
 
   def initialize(attributes)
-    @name = attributes[:name]
-    @id = attributes[:id]
+    @name = attributes.fetch(:name)
+    @id = attributes.fetch(:id).to_i
   end
 
   def self.get_cities(cities)
