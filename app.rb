@@ -9,7 +9,7 @@ also_reload('lib/**/*.rb')
 DB = PG.connect({:dbname => "volunteer_tracker"})
 
 get('/') do
-  erb(:index)
+  redirect to('/index')
 end
 
 get('/index') do
@@ -17,125 +17,78 @@ get('/index') do
 end
 
 get('/projects') do
-  @cities = City.all
-  @trains = Train.all
-  erb(:operator)
+  @projects = Project.all
+  erb(:projects)
 end
 
+get('/volunteer') do
+  @volunteers = Volunteer.all
+  erb(:volunteer)
+end
 
+get('/projects/new') do
+  erb :new_project
+end
 
+post('/projects') do
+  title = params[:project_title]
+  project = Project.new({:title => title, :id => nil})
+  project.save()
+  redirect to('/projects')
+end
 
+get('/projects/search') do
+  @search_result = Project.search(params[:search])
+  erb(:search_results)
+end
 
+get('/projects/:id') do
+  @project = Project.find(params[:id].to_i())
+  erb(:project)
+end
 
+get('/projects/:id/edit') do
+  @project = Project.find(params[:id].to_i())
+  erb(:edit_project)
+end
 
+patch('/projects/:id') do
+  @project = Project.find(params[:id].to_i())
+  @project.update(params[:title])
+  redirect to('/projects')
+end
 
+delete('/projects/:id') do
+  @project = project.find(params[:id].to_i)
+  @project.delete()
+  redirect to ('/projects')
+end
 
+######---------------Volunteer Pages------------------------>
 
-
-# get('/') do
-#   erb(:index)
+# get('/projects/:id/volunteers/:volunteer_id') do
+#   @volunteer = Volunteer.find(params[:volunteer_id].to_i())
+#   erb(:volunteer)
 # end
 
-# get('/index') do
-#   erb(:index)
-# end
+post('/projects/:id/volunteers') do
+  @project = Project.find(params[:id].to_i())
+  volunteer = params[:volunteer_name]
+  volunteer = Volunteer.new({:name => params[:volunteer_name], :project_id => @project.id, :id => nil})
+  volunteer.save()
+  erb(:project)
+end
 
-# get('/operator') do
-#   @cities = City.all
-#   @trains = Train.all
-#   erb(:operator)
-# end
+patch('/projects/:id/volunteers/:volunteer_id') do
+  @project = Project.find(params[:id].to_i())
+  volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  volunteer.update(params[:volunteer_name], @project.id)
+  erb(:project)
+end
 
-# get('/rider') do
-#   @cities = City.all
-#   @trains = Train.all
-#   erb(:rider)
-# end
-
-# post('/rider') do 
-#   city = params.fetch("city_name")
-#   train = params.fetch("train_name")
-#   train = Train.new({:name => train_name, :id => nil})
-#   train.save()
-#   city = City.new({:name => city_name, :id => nil})
-#   city.save()
-#   redirect to('/operator')
-# end
-
-
-
-
-# get('/words_homepage/new') do
-#   erb(:new_word)
-# end
-
-# get('/words_homepage/:id') do
-#   @word = Word.find(params[:id].to_i)
-#   # @definitions = Definition.find_by_word(@word.id)
-#   erb(:word_subpage)
-# end
-
-# post('/words_homepage') do
-#   term = params[:word_term]
-#   word = Word.new({:term => term, :id => nil})
-#   word.save()
-#   @words = Word.all()
-#   redirect to ('/')
-# end
-
-# get('/words_homepage/:id/edit') do
-#   @word = Word.find(params[:id].to_i())
-#   erb(:edit_word)
-# end
-
-# patch('/words_homepage/:id') do
-#   @word = Word.find(params[:id].to_i())
-#   @word.update(params[:term])
-#   @words = Word.all
-#   erb(:words_homepage)
-# end
-
-# delete('/words_homepage/:id') do
-#   @word = Word.find(params[:id].to_i())
-#   @word.delete()
-#   @words = Word.all
-#   erb(:words_homepage)
-# end
-
-# # get('/words_homepage/:id') do 
-# #   @word = Word.find(params[:id].to_i())
-# #   @word.sort()
-# #   @words = Words.all
-# #   erb(:words_homepage)
-# # end
-
-# # ///-----Definitions---------------------------------------->
-
-# get('/words_homepage/:id/definitions/:definition_id') do
-#   # @word = Word.find(params[:id].to_i)
-#   @definition = Definition.find(params[:definition_id].to_i)
-#   erb(:definition)
-# end 
-
-# post('/words_homapge/:id/definitions') do
-#   @word = Word.find(params[:id].to_i())
-#   definition = Definition.new({:term => term, :id => nil, :word_id => @word.id})
-#   definition.save()
-#   erb(:word_subpage)
-# end
-
-# patch('/words_homepage/:id/definitions/:definition_id') do
-#   @word = Word.find(params[:id].to_i)
-#   definition = Definition.find(params[:definition_id].to_i)
-#   definition.update(params[:term])
-#   @definitions = Definition.find_by_word(@word.id)
-#   erb(:word_subpage)
-# end 
-
-# delete('/words_homepage/:id/definitions/:definition_id') do 
-#   definition = Definition.find_by_word(@word.id)
-#   definition.delete()
-#   @word = Word.find(params[:id].to_i)
-#   definition = Definition.find(params[:definition_id].to_i)
-#   erb(:word_subpage)
-# end  
+delete('/projects/:id/volunteers/:volunteer_id') do
+  volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  volunteer.delete
+  @project = Project.find(params[:id].to_i())
+  erb(:project)
+end

@@ -105,13 +105,18 @@ describe (Project) do
       expect(Project.all).to(eq([project2]))
     end
   end
-  describe('.search') do
-    it("searches for an project by name") do
-      project = Project.new({:name => "Giant Steps", :id => nil, :years => "2000", :genre => "rock",:artist => "chi"})
-      project.save()
-      project2 = Project.new({:name => "Blue", :id => nil, :years => "2010", :genre => "pop", :artist => "celeste"})
-      project2.save()
-      expect(Project.search("blue")).to(eq([project2]))
-    end
-  end
 end
+
+
+
+
+
+  # describe('.search') do
+  #   it("searches for a project by title") do
+  #     project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
+  #     project.save()
+  #     project2 = Project.new({:title => 'Teaching Ruby to Kids', :id => nil})
+  #     project2.save()
+  #     expect(Project.search("Teaching Ruby")).to(eq([project2]))
+  #   end
+  # end

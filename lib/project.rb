@@ -32,26 +32,8 @@ class Project
     Project.new({:title => title, :id => id})
   end
 
-  def self.search(name)
-    project = DB.exec("SELECT * FROM projects WHERE name = '#{name}'").first
-    title = project.fetch("title")
-    id = project.fetch("id").to_i
-    Project.new({:title => title, :id => id})
-  end
-
-  def self.query(name)
-    search_results = []
-    projects = DB.exec("SELECT * FROM projects WHERE name LIKE '%#{name}%';")
-    projects.each() do |project|
-      title = project.fetch("title")
-      id = project.fetch("id")
-      projects.push(Project.new({:title => title, :id => id}))
-    end
-    return search_results
-  end
-
   def ==(project_to_compare)
-    self.id.eql?(project_to_compare.id)
+    self.title() == project_to_compare.title()
   end
 
   def self.clear
@@ -71,5 +53,23 @@ class Project
     Volunteer.find_by_project(self.id)
   end
 end
+
+# def self.search(title)
+  #   project = DB.exec("SELECT * FROM projects WHERE title = '#{title}'").first
+  #   title = project.fetch("title")
+  #   id = project.fetch("id").to_i
+  #   Project.new({:title => title, :id => id})
+  # end
+
+  # def self.query(title)
+  #   search_results = []
+  #   projects = DB.exec("SELECT * FROM projects WHERE title LIKE '%#{title}%';")
+  #   projects.each() do |project|
+  #     title = project.fetch("title")
+  #     id = project.fetch("id").to_i
+  #     projects.push(Project.new({:title => title, :id => id}))
+  #   end
+  #   return search_results
+  # end
 
 
