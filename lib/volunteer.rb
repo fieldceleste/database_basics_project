@@ -21,8 +21,7 @@ class Volunteer
       end
       volunteers
     end
-  end
-
+  
   def save 
       volunteer = DB.exec("INSERT INTO volunteers (name, project_id) VALUES ('#{@name}',#{@project_id}) RETURNING id;")
       @id = result.first().fetch("id").to_i
@@ -53,7 +52,7 @@ class Volunteer
   def delete
     DB.exec("DELETE FROM volunteers WHERE id = #{@id};")
   end
-  
+
   def self.find_by_project(prj_id)
     volunteers = []
     returned_volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{prj_id};")
@@ -64,6 +63,10 @@ class Volunteer
       volunteers.push(Volunteer.new({:name => name, :project_id => project_id, :id => id}))
     end
     volunteers
+  end
+
+  def project
+    Project.find(@project_id)
   end
 end
 #   def self.search(name)
