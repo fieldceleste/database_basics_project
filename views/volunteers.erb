@@ -1,0 +1,16 @@
+<h1>Current Volunteers</h1>
+
+<h3>Here is a list of all the current volunteers:</h3>
+<div class= "current">
+  <% if @project.volunteers %>
+    <ul>
+    <% @project.volunteers.each do |volunteer| %>
+      <li><a href="/projects/<%= @project.id %>/volunteers/<%=volunteer.id %>"><%= volunteer.name %></a>
+    <% end %>
+  </ul>
+<% else %> 
+  <p>There are currently no volunteers at this time</p>
+<% end %>
+</div>
+
+<p><a href="/index">Return to the Homepage</a></p>

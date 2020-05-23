@@ -18,14 +18,16 @@ end
 
 get('/projects') do
   @projects = Project.all
+  @volunteers = Volunteer.all
   erb(:projects)
 end
-
-get('/volunteer') do
+###---------------------Volunteers Page--------------------->
+get('/volunteers') do
   @volunteers = Volunteer.all
-  erb(:volunteer)
+  @projects = Project.all
+  erb(:volunteers)
 end
-
+###-----------------------Projects Pages------------------------->
 get('/projects/new') do
   erb :new_project
 end
@@ -64,12 +66,12 @@ delete('/projects/:id') do
   redirect to ('/projects')
 end
 
-######---------------Volunteer Pages------------------------>
+######---------------Volunteers on Projects------------------------>
 
-# get('/projects/:id/volunteers/:volunteer_id') do
-#   @volunteer = Volunteer.find(params[:volunteer_id].to_i())
-#   erb(:volunteer)
-# end
+get('/projects/:id/volunteers/:volunteer_id') do
+  @volunteer = Volunteer.find(params[:volunteer_id].to_i())
+  erb(:volunteer)
+end
 
 post('/projects/:id/volunteers') do
   @project = Project.find(params[:id].to_i())
@@ -82,7 +84,7 @@ end
 patch('/projects/:id/volunteers/:volunteer_id') do
   @project = Project.find(params[:id].to_i())
   volunteer = Volunteer.find(params[:volunteer_id].to_i())
-  volunteer.update(params[:volunteer_name], @project.id)
+  volunteer.update(params[:name], @project.id)
   erb(:project)
 end
 

@@ -40,8 +40,8 @@ _No known bugs at this time_
 |Specs|
 | :-----|
 | As a non-profit employee, I want to view, add, update and delete projects.| √
-| As a non-profit employee, I want to view and add volunteers.| 
-| As a non-profit employee, I want to add volunteers to a project.|
+| As a non-profit employee, I want to view and add volunteers.| √
+| As a non-profit employee, I want to add volunteers to a project.| √
 
 ## Support and Contact Details
 * _Please contact Celeste Field at fieldceleste@gmail.com_
