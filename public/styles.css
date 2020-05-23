@@ -1,0 +1,13 @@
+body {
+  background-color: rgb(245, 188, 115);
+  text-align: center;
+  justify-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.current {
+  margin-right: 50px;
+  list-style-position: inside;
+}
+.form-control {
+  margin-left: 420px;
+}
