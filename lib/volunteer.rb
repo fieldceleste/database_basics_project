@@ -62,14 +62,6 @@ class Volunteer
     volunteers
   end
 
-    def self.search(name)
-      volunteer = DB.exec("SELECT * FROM volunteers WHERE name = '#{name}'").first
-      name = volunteer.fetch("name")
-      id = volunteer.fetch("id").to_i
-      project_id = volunteer.fetch("project_id").to_i
-      Volunteer.new({:name => name, :id => id, :project_id => project_id})
-    end
-
   def self.query(name)
     search_results = []
     volunteers = DB.exec("SELECT * FROM volunteers WHERE name LIKE '%#{name}%';")
@@ -88,4 +80,12 @@ class Volunteer
 end
 
 
+
+# def self.search(name)
+#   volunteer = DB.exec("SELECT * FROM volunteers WHERE name = '#{name}'").first
+#   name = volunteer.fetch("name")
+#   id = volunteer.fetch("id").to_i
+#   project_id = volunteer.fetch("project_id").to_i
+#   Volunteer.new({:name => name, :id => id, :project_id => project_id})
+# end
 

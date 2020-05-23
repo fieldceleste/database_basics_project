@@ -18,15 +18,14 @@ end
 
 get('/projects') do
   @projects = Project.all
-  @volunteers = Volunteer.all
   erb(:projects)
 end
 ###---------------------Volunteers Page--------------------->
-get('/volunteers') do
-  @volunteers = Volunteer.all
-  @projects = Project.all
-  erb(:volunteers)
-end
+# get('/volunteers') do
+#   @volunteers = Volunteer.all
+#   @projects = Project.all
+#   erb(:volunteers)
+
 ###-----------------------Projects Pages------------------------->
 get('/projects/new') do
   erb :new_project
@@ -57,7 +56,7 @@ patch('/projects/:id') do
 end
 
 delete('/projects/:id') do
-  @project = project.find(params[:id].to_i)
+  @project = Project.find(params[:id].to_i)
   @project.delete()
   redirect to ('/projects')
 end
