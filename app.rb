@@ -39,10 +39,6 @@ post('/projects') do
   redirect to('/projects')
 end
 
-get('/projects/search') do
-  @search_result = Project.search(params[:search])
-  erb(:search_results)
-end
 
 get('/projects/:id') do
   @project = Project.find(params[:id].to_i())

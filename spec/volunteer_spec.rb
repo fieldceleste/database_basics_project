@@ -46,17 +46,6 @@ describe Volunteer do
     end
   end
 
-  describe('.clear') do
-    it("clears all volunteers") do
-      volunteer = Volunteer.new({:name => 'Teaching Kids to Code', :project_id => 1, :id => nil})
-      volunteer.save()
-      volunteer2 = Volunteer.new({:name => 'Teaching Ruby to Kids', :project_id => 2,  :id => nil})
-      volunteer2.save()
-      Volunteer.clear()
-      expect(Volunteer.all).to(eq([]))
-    end
-  end
-
   describe('.find') do
     it('returns a volunteer by id') do
       volunteer1 = Volunteer.new({:name => 'Jane', :project_id => 1, :id => nil})

@@ -31,9 +31,6 @@ class Volunteer
     self.name.downcase().eql?(volunteer_to_compare.name.downcase())
   end
 
-  def self.clear
-    DB.exec("DELETE FROM volunteers *;")
-  end
 
   def self.find(id)
     volunteer = DB.exec("SELECT * FROM volunteers WHERE id = #{id};").first

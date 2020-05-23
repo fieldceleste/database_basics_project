@@ -53,17 +53,6 @@ describe (Project) do
     end
   end
 
-  describe('.clear') do
-    it("clears all projects") do
-      project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
-      project.save()
-      project2 = Project.new({:title => 'Teaching Ruby to Kids', :id => nil})
-      project2.save()
-      Project.clear()
-      expect(Project.all).to(eq([]))
-    end
-  end
-
   describe('.find') do
     it('returns a project by id') do
       project1 = Project.new({:title => 'Teaching Kids to Code', :id => nil})
@@ -106,17 +95,3 @@ describe (Project) do
     end
   end
 end
-
-
-
-
-
-  # describe('.search') do
-  #   it("searches for a project by title") do
-  #     project = Project.new({:title => 'Teaching Kids to Code', :id => nil})
-  #     project.save()
-  #     project2 = Project.new({:title => 'Teaching Ruby to Kids', :id => nil})
-  #     project2.save()
-  #     expect(Project.search("Teaching Ruby")).to(eq([project2]))
-  #   end
-  # end

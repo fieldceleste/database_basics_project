@@ -36,9 +36,9 @@ class Project
     self.title() == project_to_compare.title()
   end
 
-  def self.clear
-    DB.exec("DELETE FROM projects *;")
-  end
+  # def self.clear
+  #   DB.exec("DELETE FROM projects *;")
+  # end
 
   def update(title)
     @title = title
