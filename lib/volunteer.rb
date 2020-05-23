@@ -56,7 +56,6 @@ class Volunteer
     returned_volunteers.each() do |volunteer|
       name = volunteer.fetch("name")
       id = volunteer.fetch("id").to_i
-      # project_id = project_id("project_id").to_i
       volunteers.push(Volunteer.new({:name => name, :project_id => prj_id, :id => id}))
     end
     volunteers

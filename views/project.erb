@@ -14,18 +14,18 @@
 <% end %>
 </div>
 
-<h4>Add a New Volunteer:</h4>  
+
 
 <form action="/projects/<%= @project.id %>/volunteers" method="post">
   <div class="form-group">
-    <label for="volunteer_name">Volunteer Name</label>
-    <input id="volunteer_name" name="volunteer_name" class="form-control" type="text">
+    <label for="volunteer_name">Add a new Volunteer</label>
+    <input id="volunteer_name" style="width: 300px" name="volunteer_name" class="form-control" type="text">
   </div>
   <button type="submit" class="btn">Add Volunteer</button>
 </form>
-
-<p><a href="/projects/<%= @project.id %>/edit">Edit project</a></p>
-<p><a href="/projects">Return to project list</a></p>
+<br>
+<p><button type="submit"><a href="/projects/<%= @project.id %>/edit">Edit project</button></a></p>
+<p><button type="submit"><a href="/projects">Return to Project List</button></a></p>
 
 
 

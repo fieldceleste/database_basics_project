@@ -51,6 +51,17 @@ class Project
   end
 end
 
+
+
+
+
+
+
+
+
+
+
+
 # def self.search(title)
   #   project = DB.exec("SELECT * FROM projects WHERE title = '#{title}'").first
   #   title = project.fetch("title")

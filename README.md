@@ -17,10 +17,10 @@ _This application will allow a user to be able to track current non-profit proje
 * _Run any script files by running `$ ruby database_basics_project.rb`_
 * _To run this page from your local terminal run: `$ ruby app.rb`
 * _Then use `localhost:4567` to view in browser. 
-* _To deploy site on a live server, please use the following link to the Heroku site:
+* _To deploy site on a live server, please use the following link to the Heroku site: https://git.heroku.com/boiling-cove-39706.git (Does not currently deploy)_
 
 ## Known Bugs
-_No known bugs at this time_
+_Volunteer button on homepage, not functioning at the moment. Heroku link will not open successfully._
 
 ## Technology
 

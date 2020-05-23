@@ -21,10 +21,7 @@ get('/projects') do
   erb(:projects)
 end
 ###---------------------Volunteers Page--------------------->
-# get('/volunteers') do
-#   @volunteers = Volunteer.all
-#   @projects = Project.all
-#   erb(:volunteers)
+
 
 ###-----------------------Projects Pages------------------------->
 get('/projects/new') do
